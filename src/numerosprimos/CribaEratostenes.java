@@ -28,41 +28,40 @@ public class CribaEratostenes
  * @param max es el valor máximo
  * @return Vector de números primos
  */
- public static int[] generarPrimos (int max) 
- { 
- int i,j; 
- if (max >= 2) { 
- 
- // Declaraciones
- boolean[] esPrimo = new boolean[max + 1]; 
- 
- // Inicializar el array
- for (i=0; i<esPrimo.length; i++) 
- esPrimo[i] = true; 
- 
- // Eliminar el 0 y el 1, que no son primos
- esPrimo[0] = esPrimo[1] = false; 
- 
- // Criba
- for (i=2; i<Math.sqrt(esPrimo.length)+1; i++) { 
-    if (esPrimo[i]) {
-    // Eliminar los múltiplos de i
-       for (j=2*i; j<esPrimo.length; j+=i) 
-          esPrimo[j] = false; 
+ public static int[] generarPrimos (int max) {
+     
+    // Declaraciones
+    boolean[] esPrimo = new boolean[max + 1]; 
+       
+    if (max >= 2) { 
+
+    // Inicializar el array
+    for (int i=0; i<esPrimo.length; i++) 
+    esPrimo[i] = true; 
+
+    // Eliminar el 0 y el 1, que no son primos
+    esPrimo[0] = esPrimo[1] = false; 
+
+    // Criba
+    for (int i=2, j; i<Math.sqrt(esPrimo.length)+1; i++) { 
+       if (esPrimo[i]) {
+       // Eliminar los múltiplos de i
+          for (j=2*i; j<esPrimo.length; j+=i) 
+             esPrimo[j] = false; 
+          } 
+   }
+
+    // ¿Cuántos primos hay? 
+    int cuenta = 0; 
+    for (int i=0; i<esPrimo.length;i++) { 
+       if (esPrimo[i]) 
+       cuenta++; 
        } 
-}
- 
- // ¿Cuántos primos hay? 
- int cuenta = 0; 
- for (i=0; i<esPrimo.length; i++) { 
- if (esPrimo[i]) 
- cuenta++; 
- } 
- // Rellenar el vector de números primos
- int[] primos = new int[cuenta]; 
- for (i=0, j=0; i<esPrimo.length; i++) { 
- if (esPrimo[i])
- primos[j++] = i; 
+    // Rellenar el vector de números primos
+       int[] primos = new int[cuenta]; 
+       for (int i=0, j=0; i<esPrimo.length; i++) { 
+       if (esPrimo[i])
+       primos[j++] = i; 
  } 
  
  return primos; 
