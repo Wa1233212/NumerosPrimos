@@ -18,9 +18,10 @@
  * del valor máximo. Todos los números que queden sin 
  * tachar son números primos.
  */ 
-
 package numerosprimos;    
-    
+
+import java.util.Arrays;
+
 public class CribaEratostenes 
 { 
  /** 
@@ -28,49 +29,49 @@ public class CribaEratostenes
  * @param max es el valor máximo
  * @return Vector de números primos
  */
- public static int[] generarPrimos (int max) {
-     
-    // Declaraciones
-    boolean[] esPrimo = new boolean[max + 1]; 
-       
-    if (max >= 2) { 
+    public static int[] generarPrimos (int max) {
 
-    // Inicializar el array
-    for (int i=0; i<esPrimo.length; i++) 
-    esPrimo[i] = true; 
+        // Declaraciones
+        int[] primosTemp = new int[max]; 
+        int[] primos;
+        int count = 0;
 
-    // Eliminar el 0 y el 1, que no son primos
-    esPrimo[0] = esPrimo[1] = false; 
-
-    // Criba
-    for (int i=2, j; i<Math.sqrt(esPrimo.length)+1; i++) { 
-       if (esPrimo[i]) {
-       // Eliminar los múltiplos de i
-          for (j=2*i; j<esPrimo.length; j+=i) 
-             esPrimo[j] = false; 
-          } 
-   }
-
-    // ¿Cuántos primos hay? 
-    int cuenta = 0; 
-    for (int i=0; i<esPrimo.length;i++) { 
-       if (esPrimo[i]) 
-       cuenta++; 
-       } 
-    // Rellenar el vector de números primos
-       int[] primos = new int[cuenta]; 
-       for (int i=0, j=0; i<esPrimo.length; i++) { 
-       if (esPrimo[i])
-       primos[j++] = i; 
- } 
+        // Inicializar el array
+        for (int i=0, j=0; i<max; i++) {
+            if(esPrimo(i)){
+                primosTemp[j] = i;
+                j++;
+            }
+        }
+        // Borrar parte del array no usado
+        // Contamos cuantos numeros tiene el array para copiarlo en otro
+        
+        for (int i=0; i<max; i++) {
+            if(primosTemp[i] != 0){
+                count++;
+            }
+        }
+        
+        primos = new int[count];
+        
+        System.arraycopy(primosTemp, 0, primos, 0, count);
+        
+        return primos;
+    }
  
- return primos; 
  
- } else { // max < 2 
- 
- return new int[0]; // Vector vacío
- } 
- }
+    private static boolean esPrimo(int n){
+
+              if (n <= 1)
+                  return false;
+
+              for (int i = 2; i < n; i++)
+                  if (n % i == 0)
+                      return false;
+
+              return true;
+      }
+  
 }
 
 
